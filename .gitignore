@@ -1,0 +1,4 @@
+# ignore folders images and images_work
+# ignore all files in images and images_work
+images/*
+images_work/*
