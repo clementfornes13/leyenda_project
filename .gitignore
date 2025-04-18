@@ -4,3 +4,9 @@ myenv/*
 images/*
 imagesL2/*
 imagesL2 copy/*
+datasets/*
+data/*
+dd/*
+binary_classifier.h5
+gaussian_noise.h5
+*.DS_Store
