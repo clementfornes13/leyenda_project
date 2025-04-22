@@ -11,13 +11,13 @@ np.random.seed(42)
 # Chargement du modèle
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model("modele_unet_salt_256.h5", compile=False)
+    model = tf.keras.models.load_model("salt_noise.h5", compile=False)
     model.compile(optimizer="adam", loss="mse")
     return model
 
 model = load_model()
 
-# Fonction pour ajouter du bruit "salt"
+# Fonction pour ajouter du bruit
 def add_salt_noise(image_np, amount=0.05):
     output = np.copy(image_np)
     total_pixels = image_np.shape[0] * image_np.shape[1]
@@ -49,7 +49,6 @@ def display_results(original, noisy, denoised, key):
     st.markdown(f"**PSNR :** {image_psnr:.2f} dB")
     st.markdown(f"**SSIM :** {image_ssim:.4f}")
 
-    # Bouton de téléchargement de l'image débruitée
     denoised_pil = Image.fromarray((denoised * 255).astype(np.uint8))
     buf = io.BytesIO()
     denoised_pil.save(buf, format="PNG")
@@ -79,7 +78,7 @@ if uploaded_files:
         image = Image.open(uploaded_file).convert("RGB").resize((256, 256))
         image_np = np.array(image).astype(np.float32) / 255.0
 
-        # Ajout du bruit salt sur image_np directement
+        # Ajout du bruit sur l'image
         noisy_image = add_salt_noise(image_np, amount=noise_amount)
 
         # Prédiction
