@@ -50,7 +50,6 @@ def show_livrable2():
 
         st.download_button("Télécharger l'image débruitée", data=byte_im, file_name=f"denoised_{key}.png", mime="image/png", key=f"dl_{key}")
 
-    st.title("Débruitage d'image avec U-Net")
     # Création des onglets principaux
     page1, page2 = st.tabs([
         "Modèle",
@@ -60,7 +59,7 @@ def show_livrable2():
     # Onglet 1 : Modèle
     with page1:
         # Slider pour choisir le niveau de bruit
-        noise_amount = st.slider("🔧 Niveau de bruit (salt)", min_value=0.2, max_value=0.5, value=0.2, step=0.01)
+        noise_amount = st.slider("Niveau de bruit (salt)", min_value=0.2, max_value=0.5, value=0.2, step=0.01)
 
         uploaded_files = st.file_uploader("Sélectionnez une ou plusieurs images", type=["png", "jpg", "jpeg"], accept_multiple_files=True)
 
@@ -81,7 +80,17 @@ def show_livrable2():
                 # Affichage
                 display_results(image_np, noisy_image, denoised_image, key=idx)
                 st.markdown("---")
+    with page2:
+        # --- 1. Header
+        st.markdown("## 📊 Performance du Denoiseur")
 
+        # --- 2. Cartes métriques
+        col1, col2, col3, col4, col5 = st.columns(5)
+        col1.metric("PSNR (dB)", f"{30.12:.2f}")
+        col2.metric("SSIM", f"{0.85:.2f}")
+        col3.metric("RMSE", f"{0.035:.3f}")
+        col4.metric("Inférence (ms/image)", f"{50:.0f}")
+        col5.metric("Taille modèle (Mo)", f"{10:.1f}")
 def add_salt_noise_external(image_np, amount=0.01):
     output = np.copy(image_np)
     total_pixels = image_np.shape[0] * image_np.shape[1]
@@ -100,14 +109,3 @@ def denoise_image_external(image_np, amount=0.01):
     return np.clip(denoised, 0, 1)
     # Onglet 2 : Performance generales du modèle
 
-    with page2:
-        # --- 1. Header
-        st.markdown("## 📊 Performance du Denoiseur")
-
-        # --- 2. Cartes métriques
-        col1, col2, col3, col4, col5 = st.columns(5)
-        col1.metric("PSNR (dB)", f"{30.12:.2f}")
-        col2.metric("SSIM", f"{0.85:.2f}")
-        col3.metric("RMSE", f"{0.035:.3f}")
-        col4.metric("Inférence (ms/image)", f"{50:.0f}")
-        col5.metric("Taille modèle (Mo)", f"{10:.1f}")

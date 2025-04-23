@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 import pickle
 from PIL import Image
-
+import pandas as pd
 def show_livrable3():
     st.title("Génération de légendes - Livrable 3")
 
@@ -96,7 +96,6 @@ def show_livrable3():
         return ' '.join(result)
 
 
-    st.title("Débruitage d'image avec U-Net")
     # Création des onglets principaux
     page1, page2 = st.tabs([
         "Modèle",
@@ -115,6 +114,38 @@ def show_livrable3():
             caption = generate_caption(image_tensor)
             st.subheader("📝 Légende générée :")
             st.success(caption)
+
+    bleu4_score     = 0.14
+    rouge1_score    = 0.45
+    rougel_score    = 0.38
+    avg_caption_len = 12.3 
+
+    with page2:
+        st.title("📈 Performance et Caractéristiques du Modèle de Captioning")
+
+        # ——— Cartes métriques (2 lignes de 4)
+        row1 = st.columns(4)
+        row1[0].metric("BLEU-4",        f"{bleu4_score:.2f}")
+        row1[1].metric("ROUGE-1",       f"{rouge1_score:.2f}")
+        row1[2].metric("ROUGE-L",       f"{rougel_score:.2f}")
+        row1[3].metric("Perplexity",    f"{avg_caption_len:.2f}")
+
+        hp = {
+                "Dataset":        ["COCO Captions v2017"],
+                "Époques":        [20],
+                "Batch Size":     [32],
+                "Learning Rate":  [5e-5],
+                "Optimizer":      ["AdamW"],
+                "Beam Size":      [4],
+                "Scheduler":      ["Warmup+CosineAnneal"],
+            }
+        
+        st.write("")
+        st.write("")
+        st.table(pd.DataFrame(hp))
+        st.write("")
+        st.write("")
+
 
 # Fonction externe pour pipeline
 def generate_caption_external(image_np):
@@ -206,35 +237,5 @@ def generate_caption_external(image_np):
         dec_input = tf.expand_dims([predicted_id], 0)
 
     return ' '.join(result)    
-    bleu4_score     = 0.14
-    rouge1_score    = 0.45
-    rougel_score    = 0.38
-    avg_caption_len = 12.3 
-
-    with page2:
-        st.title("📈 Performance et Caractéristiques du Modèle de Captioning")
-
-        # ——— Cartes métriques (2 lignes de 4)
-        row1 = st.columns(4)
-        row1[0].metric("BLEU-4",        f"{bleu4_score:.2f}")
-        row1[1].metric("ROUGE-1",       f"{rouge1_score:.2f}")
-        row1[2].metric("ROUGE-L",       f"{rougel_score:.2f}")
-        row1[3].metric("Perplexity",    f"{avg_caption_len:.2f}")
-
-        hp = {
-                "Dataset":        ["COCO Captions v2017"],
-                "Époques":        [20],
-                "Batch Size":     [32],
-                "Learning Rate":  [5e-5],
-                "Optimizer":      ["AdamW"],
-                "Beam Size":      [4],
-                "Scheduler":      ["Warmup+CosineAnneal"],
-            }
-        
-        st.write("")
-        st.write("")
-        st.table(pd.DataFrame(hp))
-        st.write("")
-        st.write("")
 
             

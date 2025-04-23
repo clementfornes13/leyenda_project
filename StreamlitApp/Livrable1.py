@@ -22,7 +22,7 @@ def show_livrable1():
     if uploaded_files:
         for idx, uploaded_file in enumerate(uploaded_files):
             image = Image.open(uploaded_file).convert("RGB")
-            image_array = np.array(image).astype(np.float32) / 255.0
+            image_array = np.array(image).astype(np.float32)
 
             st.image(image, caption="Image importée", use_container_width=True)
 
