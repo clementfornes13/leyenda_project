@@ -10,12 +10,10 @@ st.set_page_config(
 )
 
 st.sidebar.title("Navigation")
-page = st.sidebar.radio( [
-    "Livrable 1",
-    "Livrable 2",
-    "Livrable 3",
-    "Pipeline entière"
-])
+page = st.sidebar.radio(
+    label="Choisissez une page",
+    options=["Livrable 1", "Livrable 2", "Livrable 3", "Pipeline entière"]
+)
 
 if page == "Livrable 1":
     show_livrable1()
