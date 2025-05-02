@@ -10,7 +10,7 @@ def show_livrable2():
 
     @st.cache_resource
     def load_model():
-        model = tf.keras.models.load_model("model/salt_noise.h5", compile=False)
+        model = tf.keras.models.load_model("../StreamlitApp/model/salt_noise.h5", compile=False)
         model.compile(optimizer="adam", loss="mse")
         return model
 
@@ -100,7 +100,7 @@ def add_salt_noise_external(image_np, amount=0.01):
     return np.clip(output, 0, 1)
 
 def denoise_image_external(image_np, amount=0.01):
-    model = tf.keras.models.load_model("model/salt_noise.h5", compile=False)
+    model = tf.keras.models.load_model("../StreamlitApp/model/salt_noise.h5", compile=False)
     model.compile(optimizer="adam", loss="mse")
     resized = tf.image.resize(image_np, (256, 256)).numpy()
     noisy = add_salt_noise_external(resized, amount)
