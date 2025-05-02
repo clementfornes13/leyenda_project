@@ -64,8 +64,8 @@ def show_livrable3():
             tf.random.uniform((1, 64, EMBED_DIM)),
             decoder.reset_state(batch_size=1))
 
-    encoder.load_weights("./model/encoder.weights.h5")
-    decoder.load_weights("./model/decoder.weights.h5")
+    encoder.load_weights("../StreamlitApp/model/encoder.weights.h5")
+    decoder.load_weights("../StreamlitApp/model/decoder.weights.h5")
 
     inception_model = tf.keras.applications.InceptionV3(include_top=False, weights='imagenet')
     feature_extractor = tf.keras.Model(inputs=inception_model.input, outputs=inception_model.output)
@@ -201,7 +201,7 @@ def generate_caption_external(image_np):
     encoder = CNN_Encoder(EMBED_DIM)
     decoder = RNN_Decoder(VOCAB_SIZE, EMBED_DIM, UNITS)
 
-    with open("./model/tokenizer.pkl", "rb") as f:
+    with open("../StreamlitApp/model/tokenizer.pkl", "rb") as f:
         tokenizer = pickle.load(f)
 
     encoder(tf.random.uniform((1, 64, 2048)))
@@ -209,8 +209,8 @@ def generate_caption_external(image_np):
             tf.random.uniform((1, 64, EMBED_DIM)),
             decoder.reset_state(batch_size=1))
 
-    encoder.load_weights("./model/encoder.weights.h5")
-    decoder.load_weights("./model/decoder.weights.h5")
+    encoder.load_weights("../StreamlitApp/model/encoder.weights.h5")
+    decoder.load_weights("../StreamlitApp/model/decoder.weights.h5")
 
     inception_model = InceptionV3(include_top=False, weights='imagenet')
     feature_extractor = tf.keras.Model(inputs=inception_model.input, outputs=inception_model.output)
