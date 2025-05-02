@@ -8,7 +8,7 @@ def show_livrable1():
 
     @st.cache_resource
     def load_model():
-        return tf.keras.models.load_model("model/binary_classifier.h5")
+        return tf.keras.models.load_model("../StreamlitApp/model/binary_classifier.h5")
 
     model = load_model()
 
