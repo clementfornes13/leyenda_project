@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/Python-3.9+-green.svg)](https://www.python.org/)
-[![Streamlit App](https://img.shields.io/badge/Streamlit-App-red?logo=streamlit)]
+[![Streamlit App](https://img.shields.io/badge/Streamlit-App-red?logo=streamlit)](https://leyenda.streamlit.app/)
 
 ## 📘 Contexte
 
