@@ -35,7 +35,7 @@ def show_livrable1():
             st.markdown("---")
 
 def classify_image_external(image_array):
-    model = tf.keras.models.load_model("model/binary_classifier.h5")
+    model = tf.keras.models.load_model("../StreamlitApp/model/binary_classifier.h5")
     resized = tf.image.resize(image_array, (256, 256)) / 255.0
     input_tensor = np.expand_dims(resized, axis=0)
     return model.predict(input_tensor)[0][0]
